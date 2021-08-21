@@ -69,12 +69,12 @@ with open(csvpath, 'r') as csvfile:
 #Putting it into a text file in the required format
 
 textpath2 = os.path.join("analysis","financial_analysis.txt")
-with open(textpath2, 'a') as summarisedctext:
-    summarisedctext.truncate(0)
-    summarisedctext.writelines("Financial Analysis\n")
-    summarisedctext.writelines("-"*30+"\n")
-    summarisedctext.writelines(f"Total Months: {len(numberOfMonths)}\n")
-    summarisedctext.writelines(f"Total: {netProfitformatted}\n")
-    summarisedctext.writelines(f"Average Change: {averageChange}\n")
-    summarisedctext.writelines(f"Greatest Increase in Profits: {max_key} ({maxValuesFormatted})\n")
-    summarisedctext.writelines(f"Greatest Decrease in Profits: {min_key} ({minValuesFormatted})\n")
+with open(textpath2, 'a') as summarisedtext:
+    summarisedtext.truncate(0)
+    summarisedtext.writelines("Financial Analysis\n")
+    summarisedtext.writelines("-"*30+"\n")
+    summarisedtext.writelines(f"Total Months: {len(numberOfMonths)}\n")
+    summarisedtext.writelines(f"Total: {netProfitformatted}\n")
+    summarisedtext.writelines(f"Average Change: {averageChange}\n")
+    summarisedtext.writelines(f"Greatest Increase in Profits: {max_key} ({maxValuesFormatted})\n")
+    summarisedtext.writelines(f"Greatest Decrease in Profits: {min_key} ({minValuesFormatted})\n")
