@@ -7,11 +7,10 @@ csvpath = os.path.join("Resources","budget_data.csv")
 with open(csvpath, 'r') as csvfile:
     csvreader = csv.reader(csvfile)
 
-    #The total number of months included in the dataset
+    
     numberOfMonths = []
-    #The net total amount of "Profit/Losses" over the entire period
     netProfit=0
-    #The average of the changes in "Profit/Losses" over the entire period
+    
     profitLoss_list = []
     profitPeriod =[]
     csvheader = next(csvreader)
@@ -22,35 +21,36 @@ with open(csvpath, 'r') as csvfile:
         netProfit += float(row[1])
         profitLoss_list.append(row[1])
         profitPeriod.append(row[0])
+    
+    #The total number of months included in the dataset
     print(len(numberOfMonths))
+    
+    #The net total amount of "Profit/Losses" over the entire period
     netProfitformatted = "${:,.2f}".format(netProfit)
     print(netProfitformatted)
+
     print(len(profitLoss_list))
     
     monthlyChangeList = []
     monthChangePeriod =[]
-    #monthlyprofitdiff=0
-    #check the formula ensure that it is correct.
+    
     for i in range(0,(len(profitLoss_list)-1)):
-    #    print(i)
-    #    print(i+1)
-        if i<86:       #len(profitLoss_list):
+        if i<86:      
             monthlyprofitdiff =0
             monthlyprofitdiff =  float(profitLoss_list[i+1]) - float(profitLoss_list[i])
             monthlyChangeList.append(monthlyprofitdiff)
             changeProfitPeriod = profitPeriod[i+1]
             monthChangePeriod.append(changeProfitPeriod)
-    #print(monthlyChangeList)
+    
+    #The average of the changes in "Profit/Losses" over the entire period
     averageChange = "${:,.2f}".format(sum(monthlyChangeList)/len(monthlyChangeList))
     print(averageChange)
-    #print(monthChangePeriod)
+ 
     
     monthlyChange_Dict = {}
-    #print(monthlyChange_Dict)
-    
     monthlyChange_Dict = {monthChangePeriod[i]: monthlyChangeList[i] for i in range(len(monthlyChangeList))}
-    #print(monthlyChange_Dict)
-
+    
+    #The greatest increase in profits (date and amount) over the entire period
     max_key = max(monthlyChange_Dict,key=monthlyChange_Dict.get)
     all_maxValues = monthlyChange_Dict.values()
     max_values = max(all_maxValues)
@@ -58,7 +58,7 @@ with open(csvpath, 'r') as csvfile:
     maxValuesFormatted = "${:,.2f}".format(max_values)
     print(maxValuesFormatted)
     
-    
+    #The greatest decrease in losses (date and amount) over the entire period
     min_key = min(monthlyChange_Dict,key=monthlyChange_Dict.get)
     all_minValues = monthlyChange_Dict.values()
     min_values = min(all_maxValues)

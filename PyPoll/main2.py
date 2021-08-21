@@ -1,5 +1,6 @@
 import os
 import csv
+import operator
 
 
 csvpath = r"C:\Users\stagecustomnc\OneDrive\MU_DataAnalyticsBC\MonashUniversityBootcamp\python-challenge\PyPoll\Resources\election_data.csv"
@@ -7,7 +8,8 @@ csvpath = r"C:\Users\stagecustomnc\OneDrive\MU_DataAnalyticsBC\MonashUniversityB
 with open(csvpath,'r') as csvfile:
     csvreader = csv.reader(csvfile)
     csvheader = next(csvreader)
-    #The total number of votes cast
+    
+    
     counter = 0
 
     #A complete list of candidates who received votes
@@ -18,12 +20,15 @@ with open(csvpath,'r') as csvfile:
         counter += 1
         candidate_list.append(row[2])
       
-
+    #to get a set of unique Candidates (i.e. no duplicates)
     for candidates in candidate_list:
         candidate_set.add(candidates)
-    formattedCounter = "${:,.0f}".format(counter)
+    formattedCounter = "{:,.0f}".format(counter)
+    
+    #The total number of votes cast
     print(counter)
     
+    #convert the set to a list
     uniqueCandidate_List = list(candidate_set)
         
     #The total number of votes each candidate won
@@ -34,27 +39,23 @@ with open(csvpath,'r') as csvfile:
                 vote_count[j] += 1 
     print(vote_count)
     
-    vote_count2 = {}
-    
     #The percentage of votes each candidate won
+    vote_count2 = {}
     for j in uniqueCandidate_List:
         vote_count2[j] = "{:.3%}".format((float(vote_count[j])/float(counter)))
-        #vote_count2 = sorted(vote_count2,key=vote_count2.get, reverse=True)
     print(vote_count2)
     
-    #for j in uniqueCandidate_List:
-    #    print(str(j))
-    #    print(vote_count2[j])
-     #   print(vote_count[j])
-
-    vote_summary = [f"{j}: {vote_count2[j]} ({vote_count[j]})" for j in uniqueCandidate_List]
-    #for vote in vote_summary:
-     #   text = print(f"{vote}\n")
+    #sort Candidate List according to value of vote_count dictionary
+    sortedCandidateList = sorted(uniqueCandidate_List, key=vote_count.get, reverse =True)
+    
+    #list comprehension of the required output by the homework
+    vote_summary = [f"{j}: {vote_count2[j]} ({vote_count[j]:,d})" for j in sortedCandidateList]
     
     #The winner of the election based on popular vote.
     max_key = max(vote_count,key=vote_count.get)
     print(max_key)
 
+#print the analysis to the terminal and export a text file with the results.
 textpath2 = os.path.join("analysis","election_results.txt")
 
 with open(textpath2, 'a') as summarisedtext:
@@ -70,13 +71,7 @@ with open(textpath2, 'a') as summarisedtext:
     summarisedtext.writelines("-"*30+"\n")
     
                                 
-    
-    #for vote in vote_summary:
-        #print(summarisedtext.writelines(vote))
-   #vote_count2 = sorted(vote_count2,key=vote_count2.get, reverse=True)
-
-
-    
+  
 
 
     
